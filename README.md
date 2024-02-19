@@ -1,5 +1,5 @@
 # Overview #
-The project was to implement a rate monotonic scheduler to perform 1Hz analog clock detection through a USB camera. I utilized rate monotonic scheduling, assymetric multiprocessing, threading, and ring buffers in order to balance tasks (see high-level diagram for different tasks). Only results are uploaded since this is a class-wide project (to prevent cheating).</br>
+The project was to implement a rate monotonic scheduler (RMS) to perform 1Hz analog clock detection through a USB camera. I utilized rate monotonic scheduling, asymmetric multiprocessing (AMP), threading, and ring buffers in order to balance tasks (see high-level diagram for different tasks). Only results are uploaded since this is a class-wide project (to prevent cheating).</br>
 
 ## 3 Minutes of Saved Ticks Without Skips/Repeats/Blurs (Sped-up) ##
 ![](https://github.com/isch4196/real-time-embedded/blob/master/3mindiff.gif)
