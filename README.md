@@ -11,6 +11,16 @@ Basically, a sequencer schedules when each task should run by releasing a semaph
 
 See [syslog.txt](https://github.com/isch4196/real-time-embedded/blob/master/syslog.txt) for syslog statements during the execution of the system. It includes data such as the time it took for a task to run, when it ran, how many frames a task has processed so far, etc.
 
+## Software Design ##
+1) Asymmetric Multiprocessing<br/>
+Asymmetric multiprocessing was used to designate a core to a certain activity. This was necessary because with symmetric multiprocessing, work is divided and balanced between each core. This does not work well for a time-critical system. Therefore, three cores were used to process tasks in parallel, and at different rates. Core 0 is reserved for the Linux operating system. Core 1 was used for task 1, or frame acquisition. Core 2 was used for tasks 2 and 3, frame differencing and frame transformation. Core 3 was used for saving a frame into flash memory.
+2) Ring Buffers<br/>
+Ring buffers played a large part in the software design of this project. Ring buffers allowed decoupling between different tasks that ran at different rates. For example, task 1 frame acquisition simply needed to worry about acquiring frames and dumping the frames into the ring buffer that would then be processed by task 2. This way, task 1 doesn't need to worry about waiting for task 2 to finish processing the data before continuing to fill the buffer with new frames. Of course, task 2 still needs to consume the data at a rate equal to or greater than the rate task 1 produces data. 
+3) Threading<br/>
+TODO
+4) V4L2 (Video4Linux)<br/>
+TODO
+
 ## Challenges ##
-1) One of the biggest challenges for this project was maintaining a stable frame rate. Tests were conducted at different frame rates, for example at 30 FPS, 25 FPS, and 20 FPS, with only the task of frame acquisition running. However, it wasn't able to maintain a frame rate. The problem was found to be the lighting: webcams need to be under the correct lighting to be run at their max capabilities.
+1) One of the biggest challenges for this project was maintaining a stable frame rate. Tests were conducted at different frame rates, for example at 30 FPS, 25 FPS, and 20 FPS, with only the task of frame acquisition running. However, it wasn't able to maintain a stable frame rate. The problem was found to be the lighting: webcams need to be under the correct lighting to be run at their max capabilities.
 2) Another challenge was the initial design. There were two, or perhaps three, general designs that could have worked. First, one design could be a "shotgun start" in which a stable tick is detected, and then the program simply periodically acquires and saves a frame every second. Another design would be always detecting a stable tick, so this would consume more cpu processing power. The last design could be a hybrid version of both, in which the tick could be detected every minute or so, but the frames saved in between would be based on that initial timestamp.
