@@ -24,3 +24,6 @@ TODO
 ## Challenges ##
 1) One of the biggest challenges for this project was maintaining a stable frame rate. Tests were conducted at different frame rates, for example at 30 FPS, 25 FPS, and 20 FPS, with only the task of frame acquisition running. However, it wasn't able to maintain a stable frame rate. The problem was found to be the lighting: webcams need to be under the correct lighting to be run at their max capabilities.
 2) Another challenge was the initial design. There were two, or perhaps three, general designs that could have worked. First, one design could be a "shotgun start" in which a stable tick is detected, and then the program simply periodically acquires and saves a frame every second. Another design would be always detecting a stable tick, so this would consume more cpu processing power. The last design could be a hybrid version of both, in which the tick could be detected every minute or so, but the frames saved in between would be based on that initial timestamp.
+
+## Future Considerations ##
+Future considerations include adding more tasks to be balanced with RMS on core 2. This can involve tasks such as doing some sort of post-processing of the frame itself. Adding another task will tighten the bounds, meaning there will be less slack time.
